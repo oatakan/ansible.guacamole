@@ -1,14 +1,17 @@
 ---
 - name: Install MariaDB role and setup
   include_role:
-    name: bertvv.mariadb
+    name: ansible.mariadb
   vars:
+    mariadb_secure_installation: yes
     mariadb_databases:
       - name: '{{ mariadb_db_name }}'
-    mariadb_users:
+    mariadb_users_create:
       - name: '{{ mariadb_db_user }}'
-        host: '{{ mariadb_db_host }}'
+        hosts:
+        - '{{ mariadb_db_host }}'
         password: "{{ mariadb_user_password }}"
-        priv: "{{ mariadb_db_name }}.*:ALL"
+        privs:
+        - "{{ mariadb_db_name }}.*:ALL"
         append_privs: no
 ...
